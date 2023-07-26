@@ -10,11 +10,16 @@
     
     <div id="root">Not Rendered</div>
 
+    <!-- removed the script tags so we could actually bundle react in to the project -->
     <!-- api part of the library -->
-    <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <!-- <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script> -->
     <!-- part that renders it to the dom -->
-    <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <!-- <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script> -->
+
+
     <!-- Code started out inside the following script tag, but we moved it to it's own file -->
-    <script src="./App.js"></script>
+    <!-- type module tells vite we're doing es6 modules not regular JS -->
+    <!-- vite also insists that we use jsx files instead of regular js - regular js files will normally work for react components -->
+    <script type="module" src="./App.jsx"></script>
 </body>
 </html>
