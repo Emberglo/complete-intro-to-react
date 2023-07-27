@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // and effect is something that happens outside of your component - typically api requests, but can be local storage, etc
-import Pet from "./Pet";
+import Results from "./Results";
 import useBreedList from "./useBreedList";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
@@ -16,7 +16,7 @@ const SearchParams = () => {
   const [breed, setBreed] = useState("");
   const [pets, setPets] = useState([]);
   // use our custom hook to always have a correct breed list based on the current animal
-  const breeds = useBreedList(animal);
+  const [breeds] = useBreedList(animal);
 
   // an effect runs every single time you rerender a component
   // giving an empty array at the end makes it only run once when the component is first rendered
@@ -41,7 +41,9 @@ const SearchParams = () => {
     <div className="search-params">
       {/* this is a controlled form - react is controlling the form - typically not best practice - uncontrolled form just grab the data off the form when it's submitted */}
       <form
+        // e in this case is a react synthetic dom event, not an actual dom event - sometimes can be important to know, especially in typescript
         onSubmit={(e) => {
+          // prevents form from actually submitting
           e.preventDefault();
           requestPets();
         }}
@@ -57,6 +59,7 @@ const SearchParams = () => {
             onChange={(e) => setLocation(e.target.value)}
           />
         </label>
+
         <label htmlFor="animal">
           Animal
           <select
@@ -74,7 +77,8 @@ const SearchParams = () => {
             ))}
           </select>
         </label>
-        <label htmlFor="breeds">
+
+        <label htmlFor="breed">
           Breed
           <select
             id="breed"
@@ -94,15 +98,7 @@ const SearchParams = () => {
         <button>Submit</button>
       </form>
 
-      {pets.map((pet) => (
-        <Pet
-          name={pet.name}
-          animal={pet.animal}
-          breed={pet.breed}
-          key={pet.id}
-          // the key allows react to know that an array is being re ordered rather than completely changed - lets it swap things around instead of completely distroying and rerendering
-        />
-      ))}
+      <Results pets={pets} />
     </div>
   );
 };
