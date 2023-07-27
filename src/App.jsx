@@ -6,19 +6,34 @@ import SearchParams from "./SearchParams";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Details from "./Details";
 import { Link } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+//instantiate a query client cache
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // setting these to infinity means the cache will hold onto the data for the user's whole session
+      staleTime: Infinity,
+      cacheTime: Infinity,
+    },
+  },
+});
 
 // always capitalize components
 // this is essentially creating a class
 const App = () => {
   return (
+    // browser router and queryclientprovider are called higher order components - they wrap other components but don't display anything
     <BrowserRouter>
-      <header>
-        <Link to="/">Adopt Me!</Link>
-      </header>
-      <Routes>
-        <Route path="/details/:id" element={<Details />} />
-        <Route path="/" element={<SearchParams />} />
-      </Routes>
+      <QueryClientProvider client={queryClient}>
+        <header>
+          <Link to="/">Adopt Me!</Link>
+        </header>
+        <Routes>
+          <Route path="/details/:id" element={<Details />} />
+          <Route path="/" element={<SearchParams />} />
+        </Routes>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 
