@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 // and effect is something that happens outside of your component - typically api requests, but can be local storage, etc
 import Pet from "./Pet";
+import useBreedList from "./useBreedList";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -14,7 +15,8 @@ const SearchParams = () => {
   const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
   const [pets, setPets] = useState([]);
-  const breeds = [];
+  // use our custom hook to always have a correct breed list based on the current animal
+  const breeds = useBreedList(animal);
 
   // an effect runs every single time you rerender a component
   // giving an empty array at the end makes it only run once when the component is first rendered
