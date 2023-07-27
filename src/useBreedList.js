@@ -1,39 +1,45 @@
 // making a custom hook to get a breed list
-import { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import fetchBreedList from './fetchBreedList';
 
-const localCache = {};
+// comments are old way of getting the breed list before react-query:
+
+// const localCache = {};
 
 export default function useBreedList(animal) {
-    const [breedList, setBreedList] = useState([]);
-    const [status, setStatus] = useState("unloaded");
+    const results = useQuery(["breeds", animal], fetchBreedList);
 
-    useEffect(() => {
-        if (!animal) {
-            setBreedList([]);
-        } else if (localCache[animal]) {
-            // if we've seen that animal type before, we get the breed list from localCache instead of making an api request
-            setBreedList(localCache[animal]);
-        } else {
-            requestBreedList();
-        }
+    // const [breedList, setBreedList] = useState([]);
+    // const [status, setStatus] = useState("unloaded");
 
-        async function requestBreedList() {
-            setBreedList([]);
-            setStatus("loading");
+    // useEffect(() => {
+    //     if (!animal) {
+    //         setBreedList([]);
+    //     } else if (localCache[animal]) {
+    //         // if we've seen that animal type before, we get the breed list from localCache instead of making an api request
+    //         setBreedList(localCache[animal]);
+    //     } else {
+    //         requestBreedList();
+    //     }
 
-            const res = await fetch(
-                `http://pets-v2.dev-apis.com/breeds?animal=${animal}`
-            )
+    //     async function requestBreedList() {
+    //         setBreedList([]);
+    //         setStatus("loading");
 
-            const json = await res.json();
+    //         const res = await fetch(
+    //             `http://pets-v2.dev-apis.com/breeds?animal=${animal}`
+    //         )
 
-            localCache[animal] = json.breeds || [];
+    //         const json = await res.json();
 
-            setBreedList(localCache[animal]);
+    //         localCache[animal] = json.breeds || [];
 
-            setStatus("loaded");
-        }
-    }, [animal]);
+    //         setBreedList(localCache[animal]);
 
-    return [breedList, status];
+    //         setStatus("loaded");
+    //     }
+    // }, [animal]);
+
+    // the question marks after results and data indicated they may not exist - the ?? says that if they don't, give me back an empty array
+    return [results?.data?.breeds ?? [], results.status];
 }
