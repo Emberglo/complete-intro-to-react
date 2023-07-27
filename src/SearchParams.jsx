@@ -39,6 +39,7 @@ const SearchParams = () => {
 
   return (
     <div className="search-params">
+      {/* TODO - extract the form into it's own component */}
       {/* this is a controlled form - react is controlling the form - typically not best practice - uncontrolled form just grab the data off the form when it's submitted */}
       <form
         // e in this case is a react synthetic dom event, not an actual dom event - sometimes can be important to know, especially in typescript

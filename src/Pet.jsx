@@ -1,5 +1,7 @@
 //used to need to import React here but don't need to any more
 
+import { Link } from "react-router-dom";
+
 // props are how to pass data from parent to child - makes code resuable
 // old way of writing a component without JSX
 // const Pet = (props) => {
@@ -20,7 +22,7 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
   }
 
   return (
-    <a href={`/details/${id}`} className="pet">
+    <Link href={`/details/${id}`} className="pet">
       <div className="image-container">
         <img src={hero} alt={name} />
       </div>
@@ -30,7 +32,7 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
           {animal} - {breed} - {location}
         </h2>
       </div>
-    </a>
+    </Link>
   );
 };
 

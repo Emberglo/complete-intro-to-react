@@ -3,18 +3,20 @@
 import { createRoot } from "react-dom/client";
 // import Pet from "./Pet";
 import SearchParams from "./SearchParams";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Details from "./Details";
 
 // always capitalize components
 // this is essentially creating a class
 const App = () => {
   return (
-    <div>
+    <BrowserRouter>
       <h1>Adopt Me!</h1>
-      {/* <Pet name="Piper" animal="Dog" breed="German Shepherd" />
-      <Pet name="Siggy" animal="Dog" breed="German Shepherd" />
-      <Pet name="Fluffy" animal="Bird" breed="Gyrfalcon" /> */}
-      <SearchParams />
-    </div>
+      <Routes>
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/" element={<SearchParams />} />
+      </Routes>
+    </BrowserRouter>
   );
 
   // Old way of writing the component without JSX - not going to use anymore
