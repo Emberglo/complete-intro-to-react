@@ -30,6 +30,12 @@ const SearchParams = () => {
   // TODO - impement a loading screen like on the details page for pets
   const pets = results?.data?.pets ?? [];
 
+  // TODO - Go back and paginate the results of the pets array - we get more than we're seeing
+  // TODO - Hook up to the real petfinder api
+  // TODO - Try to make a context to handle a dark mode
+  // TODO - Add a navbar
+  // TODO - Try and deploy
+
   return (
     // TODO - extract the form into it's own component
     <div className="search-params">
