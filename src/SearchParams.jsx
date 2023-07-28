@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 // and effect is something that happens outside of your component - typically api requests, but can be local storage, etc
 import Results from "./Results";
 import useBreedList from "./useBreedList";
 import { useQuery } from "@tanstack/react-query";
 import fetchSearch from "./FetchSearch";
+import AdoptedPetContext from "./AdoptedPetContext";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -21,6 +22,8 @@ const SearchParams = () => {
     animal: "",
     breed: "",
   });
+  // eslint-disable-next-line no-unused-vars
+  const [adoptedPet, _] = useContext(AdoptedPetContext);
 
   // useQuery has completely removed useEffect from the project - also includes error handing and caching that we didn't have to code ourselves
   const results = useQuery(["search", requestParams], fetchSearch);
@@ -46,6 +49,11 @@ const SearchParams = () => {
           setRequestParams(obj);
         }}
       >
+        {adoptedPet ? (
+          <div className="pet image-container">
+            <img src={adoptedPet.images[0]} alt={adoptedPet.name} />
+          </div>
+        ) : null}
         <label htmlFor="location">
           Location
           {/* curly braces in value make tells it to insert the javascript expression stored in location rather than just a string "location"

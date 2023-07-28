@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Details from "./Details";
 import { Link } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import AdoptedPetContext from "./AdoptedPetContext";
 
 //instantiate a query client cache
 const queryClient = new QueryClient({
@@ -22,17 +24,21 @@ const queryClient = new QueryClient({
 // always capitalize components
 // this is essentially creating a class
 const App = () => {
+  const adoptedPet = useState(null);
   return (
     // browser router and queryclientprovider are called higher order components - they wrap other components but don't display anything
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <header>
-          <Link to="/">Adopt Me!</Link>
-        </header>
-        <Routes>
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/" element={<SearchParams />} />
-        </Routes>
+        {/* we're passing the whole useState hook here as adoptedPet, but it can accept any data type - we could pass a string or object here if we wanted */}
+        <AdoptedPetContext.Provider value={adoptedPet}>
+          <header>
+            <Link to="/">Adopt Me!</Link>
+          </header>
+          <Routes>
+            <Route path="/details/:id" element={<Details />} />
+            <Route path="/" element={<SearchParams />} />
+          </Routes>
+        </AdoptedPetContext.Provider>
       </QueryClientProvider>
     </BrowserRouter>
   );
