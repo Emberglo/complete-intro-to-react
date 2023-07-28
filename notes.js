@@ -75,4 +75,85 @@
 //   ]);
 // };
 
-// SECTION - 
+// SECTION - old Controlled Form from SearchParams
+
+// const [animal, setAnimal] = useState("");
+// const [breed, setBreed] = useState("");
+
+  // an effect runs every single time you rerender a component
+  // giving an empty array at the end makes it only run once when the component is first rendered
+  // anything you put in the array will be watched and cause a rerender when it changes (ie: [animal])
+  // useEffect(() => {
+    // requestPets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  // async function requestPets() {
+  //   // fetch request to get pets from server
+  //   const res = await fetch(
+  //     `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
+  //   );
+  //   // convert from json to js
+  //   const json = await res.json();
+  //   // update our pets state with the result
+  //   setPets(json.pets);
+  // }
+
+//   {/* this is a controlled form - react is controlling the form - typically not best practice - uncontrolled form just grab the data off the form when it's submitted */}
+//   <form
+//   // e in this case is a react synthetic dom event, not an actual dom event - sometimes can be important to know, especially in typescript
+//   onSubmit={(e) => {
+//     // prevents form from actually submitting
+//     e.preventDefault();
+//     requestPets();
+//   }}
+// >
+//   <label htmlFor="location">
+//     Location
+//     {/* curly braces in value make tells it to insert the javascript expression stored in location rather than just a string "location"
+//     onchange holds a function to run when the input detects a change and updates the state above */}
+//     <input
+//       id="location"
+//       value={location}
+//       placeholder="Location"
+//       onChange={(e) => setLocation(e.target.value)}
+//     />
+//   </label>
+
+//   <label htmlFor="animal">
+//     Animal
+//     <select
+//       id="animal"
+//       value={animal}
+//       onChange={(e) => {
+//         setAnimal(e.target.value);
+//         // clears out breed when you change animal type so incorrect breed info isn't shown
+//         setBreed("");
+//       }}
+//     >
+//       <option />
+//       {ANIMALS.map((animal) => (
+//         <option key={animal}>{animal}</option>
+//       ))}
+//     </select>
+//   </label>
+
+//   <label htmlFor="breed">
+//     Breed
+//     <select
+//       id="breed"
+//       // way of disabling a form option if there is nothing to choose from
+//       disabled={breeds.length == 0}
+//       value={breed}
+//       onChange={(e) => {
+//         setBreed(e.target.value);
+//       }}
+//     >
+//       <option />
+//       {breeds.map((breed) => (
+//         <option key={breed}>{breed}</option>
+//       ))}
+//     </select>
+//   </label>
+//   <button>Submit</button>
+// </form>
