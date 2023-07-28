@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import fetchPet from "./fetchPet";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
+import { Link } from "react-router-dom";
 
 const Details = () => {
   // id is coming from a store created by the browserrouter in app.js
@@ -47,4 +49,21 @@ const Details = () => {
   );
 };
 
-export default Details;
+// this function is basically a component that wraps our original Details component
+// if Details was taking in props - we'd have to add props as an argument to the DetailsErrorBoundary function and use {...props} inside the Details tag inside the function
+function DetailsErrorBoundary() {
+  return (
+    <ErrorBoundary
+      errorComponent={
+        <h2>
+          There was an error with this listing.{" "}
+          <Link to="/">Click here to go back to the home page.</Link>
+        </h2>
+      }
+    >
+      <Details />
+    </ErrorBoundary>
+  );
+}
+
+export default DetailsErrorBoundary;
